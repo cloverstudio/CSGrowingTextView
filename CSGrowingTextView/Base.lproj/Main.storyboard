@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" initialViewController="NTZ-tj-eKn">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="CSViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NQy-F1-BOB"/>
+                        <viewControllerLayoutGuide type="bottom" id="ecp-3d-1wd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Awh-Xc-7S8">
+                                <rect key="frame" x="58" y="170" width="204" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="204" id="AZq-94-u8M"/>
+                                    <constraint firstAttribute="height" constant="29" id="rXu-gG-QKW"/>
+                                </constraints>
+                                <state key="normal" title="Multiply growing text views">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onMultiplyGrowingTextViews:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nmP-3O-ezS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZK-Tc-JOY">
+                                <rect key="frame" x="50" y="229" width="220" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="K66-g0-x7j"/>
+                                    <constraint firstAttribute="width" constant="220" id="qea-1a-eAA"/>
+                                </constraints>
+                                <state key="normal" title="Keyboard growing text view">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onKeyboardGrowingTextView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="T7g-43-a5k"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sZK-Tc-JOY" firstAttribute="top" secondItem="Awh-Xc-7S8" secondAttribute="bottom" constant="30" id="2xC-q1-mXV"/>
+                            <constraint firstAttribute="centerX" secondItem="sZK-Tc-JOY" secondAttribute="centerX" id="K2z-zu-NEy"/>
+                            <constraint firstAttribute="centerX" secondItem="Awh-Xc-7S8" secondAttribute="centerX" id="aY7-t6-H1p"/>
+                            <constraint firstItem="Awh-Xc-7S8" firstAttribute="top" secondItem="NQy-F1-BOB" secondAttribute="bottom" constant="170" id="o0I-Bd-zeQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="xcG-Ul-CQ4"/>
+                    <connections>
+                        <segue destination="lpK-qA-HkX" kind="push" identifier="SegueKeyboardGrowingTextView" id="8Cf-2b-rZ5"/>
+                        <segue destination="jVO-aJ-mVz" kind="push" identifier="SegueMultiplyGrowingTextViews" id="5iY-gt-plN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="402" y="-49"/>
+        </scene>
+        <!--Keyboard View Controller-->
+        <scene sceneID="ebF-gD-FKC">
+            <objects>
+                <viewController id="lpK-qA-HkX" customClass="CSKeyboardViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qVp-QG-h8w"/>
+                        <viewControllerLayoutGuide type="bottom" id="BIs-bs-nly"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mnd-0g-V5V">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LK-6n-8Wr" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EWN-42-yRt">
+                                        <rect key="frame" x="20" y="20" width="280" height="406"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQS-X5-0yk" customClass="CSGrowingTextView">
+                                        <rect key="frame" x="20" y="440" width="280" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="2gC-Bm-CAc"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.80000001192092896" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="yQS-X5-0yk" firstAttribute="leading" secondItem="3LK-6n-8Wr" secondAttribute="leading" constant="20" id="2EB-os-f0K"/>
+                                    <constraint firstAttribute="bottom" secondItem="yQS-X5-0yk" secondAttribute="bottom" constant="20" id="GZq-6X-ajB"/>
+                                    <constraint firstItem="EWN-42-yRt" firstAttribute="top" secondItem="3LK-6n-8Wr" secondAttribute="top" constant="20" id="duy-dv-nkr"/>
+                                    <constraint firstAttribute="trailing" secondItem="EWN-42-yRt" secondAttribute="trailing" constant="20" id="iKi-oI-2sh"/>
+                                    <constraint firstItem="EWN-42-yRt" firstAttribute="leading" secondItem="3LK-6n-8Wr" secondAttribute="leading" constant="20" id="oxh-6w-SGj"/>
+                                    <constraint firstAttribute="trailing" secondItem="yQS-X5-0yk" secondAttribute="trailing" constant="20" id="p5N-kI-efc"/>
+                                    <constraint firstItem="yQS-X5-0yk" firstAttribute="top" secondItem="EWN-42-yRt" secondAttribute="bottom" constant="14" id="q10-GA-NeK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BIs-bs-nly" firstAttribute="top" secondItem="3LK-6n-8Wr" secondAttribute="bottom" id="5yK-ls-6nW"/>
+                            <constraint firstItem="3LK-6n-8Wr" firstAttribute="leading" secondItem="mnd-0g-V5V" secondAttribute="leading" id="SoX-b6-WVf"/>
+                            <constraint firstAttribute="trailing" secondItem="3LK-6n-8Wr" secondAttribute="trailing" id="YwW-kg-49b"/>
+                            <constraint firstItem="3LK-6n-8Wr" firstAttribute="top" secondItem="qVp-QG-h8w" secondAttribute="bottom" id="asQ-YM-fl4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="5Jv-aR-XT9"/>
+                    <connections>
+                        <outlet property="contentView" destination="3LK-6n-8Wr" id="p8v-Bl-4XK"/>
+                        <outlet property="contentViewBottomConstraint" destination="5yK-ls-6nW" id="FIt-Qt-xEs"/>
+                        <outlet property="growingTextView" destination="yQS-X5-0yk" id="Tcc-de-Wdi"/>
+                        <outlet property="growintTextViewHeightConstraint" destination="2gC-Bm-CAc" id="Oyx-4y-kmC"/>
+                        <outlet property="textView" destination="EWN-42-yRt" id="dTX-Ua-BlP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jXt-q4-RzV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="912" y="314"/>
+        </scene>
+        <!--Multiply View Controller-->
+        <scene sceneID="Ygl-Mh-ZLW">
+            <objects>
+                <viewController id="jVO-aJ-mVz" customClass="CSMultiplyViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5xu-cd-mWN"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Uh-fg-gvw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fxW-iX-SLZ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPQ-Ok-q3P" customClass="CSGrowingTextView">
+                                <rect key="frame" x="10" y="30" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Yop-ON-KOe"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tE-pF-EG5" customClass="CSGrowingTextView">
+                                <rect key="frame" x="10" y="90" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="yWt-vY-SHK"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIW-Id-ACi" customClass="CSGrowingTextView">
+                                <rect key="frame" x="10" y="150" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="fjd-zl-DDu"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IPQ-Ok-q3P" firstAttribute="leading" secondItem="fxW-iX-SLZ" secondAttribute="leading" constant="10" id="GjA-pG-fPR"/>
+                            <constraint firstItem="4tE-pF-EG5" firstAttribute="top" secondItem="IPQ-Ok-q3P" secondAttribute="bottom" constant="30" id="IIe-CO-0T8"/>
+                            <constraint firstAttribute="trailing" secondItem="aIW-Id-ACi" secondAttribute="trailing" constant="10" id="MTT-9Z-N5e"/>
+                            <constraint firstItem="aIW-Id-ACi" firstAttribute="leading" secondItem="fxW-iX-SLZ" secondAttribute="leading" constant="10" id="MZW-di-FHF"/>
+                            <constraint firstItem="IPQ-Ok-q3P" firstAttribute="top" secondItem="5xu-cd-mWN" secondAttribute="bottom" constant="30" id="TXE-MB-yS5"/>
+                            <constraint firstItem="aIW-Id-ACi" firstAttribute="top" secondItem="4tE-pF-EG5" secondAttribute="bottom" constant="30" id="X63-Js-mgl"/>
+                            <constraint firstAttribute="trailing" secondItem="IPQ-Ok-q3P" secondAttribute="trailing" constant="10" id="Z15-Ak-fTx"/>
+                            <constraint firstAttribute="trailing" secondItem="4tE-pF-EG5" secondAttribute="trailing" constant="10" id="aOC-de-lm8"/>
+                            <constraint firstItem="4tE-pF-EG5" firstAttribute="leading" secondItem="fxW-iX-SLZ" secondAttribute="leading" constant="10" id="rLD-Em-9Yy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Wj-j1-KHA"/>
+                    <connections>
+                        <outlet property="firstGrowingTextView" destination="IPQ-Ok-q3P" id="T7R-h7-dug"/>
+                        <outlet property="secondGrowingTextView" destination="4tE-pF-EG5" id="HXO-PQ-KQc"/>
+                        <outlet property="thirdGrowingTextView" destination="aIW-Id-ACi" id="7Te-F2-Ea5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X4V-Oy-BF4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="912" y="-431"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SzO-Vp-dZw">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="NTZ-tj-eKn" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SP9-eN-cEv">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="S9j-Dj-jZF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eLn-0q-lK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-80" y="-49"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
