@@ -90,7 +90,7 @@
 - (BOOL)growingTextViewShouldReturn:(CSGrowingTextView *)textView {
     [textView resignFirstResponder];
     
-    self.textView.text = textView.textView.text;
+    self.textView.text = textView.internalTextView.text;
     
     return YES;
 }
@@ -105,7 +105,7 @@
                          
                          __strong CSKeyboardViewController *strongThis = this;
                          
-                         self.growintTextViewHeightConstraint.constant = height;
+                         strongThis.growingTextViewHeightConstraint.constant = height;
                          [strongThis.growingTextView setNeedsUpdateConstraints];
                          [strongThis.growingTextView.superview layoutIfNeeded];
                      } completion:nil];

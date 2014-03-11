@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet CSGrowingTextView *growingTextView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *growintTextViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *growingTextViewHeightConstraint;
 
 @end

@@ -20,10 +20,13 @@
 
 - (void)dealloc {
     
-    [self.textView removeObserver:self
+    [self.internalTextView removeObserver:self
                        forKeyPath:@"font"];
     
-    self.textView.delegate = nil;
+    self.internalTextView.delegate = nil;
+    
+    [self.placeholderLabel removeObserver:self
+                               forKeyPath:@"text"];
 }
 
 #pragma mark - Initialization
@@ -51,27 +54,37 @@
     _maximumNumberOfLines = 4;
     _growDirection = CSGrowDirectionUp;
     
-    _textView = [[UITextView alloc] initWithFrame:self.bounds];
-    self.textView.font = [UIFont systemFontOfSize:15];
-    self.textView.backgroundColor = [UIColor clearColor];
-    self.textView.delegate = self;
-    [self addSubview:self.textView];
+    _growAnimationDuration = 0.1;
+    _growAnimationOptions = UIViewAnimationOptionCurveEaseInOut;
+    
+    _internalTextView = [[UITextView alloc] initWithFrame:self.bounds];
+    self.internalTextView.font = [UIFont systemFontOfSize:15];
+    _internalTextView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                  UIViewAutoresizingFlexibleHeight);
+    self.internalTextView.backgroundColor = [UIColor clearColor];
+    self.internalTextView.delegate = self;
+    [self addSubview:self.internalTextView];
     
     _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(kPladeholderPadding,
-                                                                  kPladeholderPadding,
+                                                                  kPladeholderPadding + [self insetsValue],
                                                                   CGRectGetWidth(self.frame) - kPladeholderPadding * 2,
                                                                   CGRectGetHeight(self.frame) - kPladeholderPadding * 2)];
     self.placeholderLabel.numberOfLines = 0;
     self.placeholderLabel.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.placeholderLabel.font = self.textView.font;
+    self.placeholderLabel.font = self.internalTextView.font;
     self.placeholderLabel.textColor = [UIColor whiteColor];
     self.placeholderLabel.backgroundColor = [UIColor clearColor];
-    [self insertSubview:self.placeholderLabel belowSubview:self.textView];
+    [self insertSubview:self.placeholderLabel belowSubview:self.internalTextView];
     
-    [self.textView addObserver:self
+    [self.internalTextView addObserver:self
                     forKeyPath:@"font"
                        options:0
                        context:NULL];
+    
+    [self.placeholderLabel addObserver:self
+                            forKeyPath:@"text"
+                               options:0
+                               context:NULL];
 }
 
 #pragma mark - Observing
@@ -84,6 +97,9 @@
     if ([keyPath isEqualToString:@"font"]) {
         [self updateLayout];
     }
+    else if ([keyPath isEqualToString:@"text"]) {
+        [self updatePlaceholderFrame];
+    }
 }
 
 #pragma mark - Setters
@@ -93,13 +109,15 @@
     NSAssert(!(minimumNumberOfLines > _maximumNumberOfLines), @"minimumNumberOfLines cannot be greater then maximumNumberOfLines");
     _minimumNumberOfLines = (minimumNumberOfLines < _maximumNumberOfLines ?
                              minimumNumberOfLines : 1);
+    
+    [self updatePlaceholderFrame];
 }
 
 - (void)setMaximumNumberOfLines:(NSUInteger)maximumNumberOfLines {
 
     NSAssert(!(maximumNumberOfLines < _minimumNumberOfLines), @"maximumNumberOfLines cannot be less then minimumNuberOfLines");
     _maximumNumberOfLines = (maximumNumberOfLines > _minimumNumberOfLines ?
-                             _maximumNumberOfLines : 3);
+                             maximumNumberOfLines : 3);
 }
 
 #pragma mark - Layout
@@ -118,12 +136,26 @@
                                       [self textViewHeight]);
     [self updateFrame:textViewFrame];
     
-    self.placeholderLabel.alpha = (self.textView.text.length ? 0.0 : 1.0);
+    self.placeholderLabel.alpha = (self.internalTextView.text.length ? 0.0 : 1.0);
+}
+
+- (CGFloat)insetsValue {
+    return self.minimumNumberOfLines * (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1 ? -2.0 : -3.0);
+}
+
+- (void)updatePlaceholderFrame {
+    
+    CGSize size = [_placeholderLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame) - kPladeholderPadding * 2,
+                                                             CGRectGetHeight(self.frame) - kPladeholderPadding * 2)];
+    _placeholderLabel.frame = CGRectMake(kPladeholderPadding,
+                                         kPladeholderPadding + [self insetsValue],
+                                         size.width, size.height);
+    
 }
 
 - (void)updateFrame:(CGRect)frame {
 
-    if (CGRectEqualToRect(frame, self.textView.frame) &&
+    if (CGRectEqualToRect(frame, self.internalTextView.frame) &&
         CGRectGetHeight(frame) == CGRectGetHeight(self.frame)) {return;}
     
     if ([(NSObject *)_delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
@@ -142,8 +174,8 @@
                yOrigin - abs(newHeight - currentHeight) : yOrigin);
     
     __weak id this = self;
-    [UIView animateWithDuration:0.1 delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut
+    [UIView animateWithDuration:_growAnimationDuration delay:0.0
+                        options:_growAnimationOptions
                      animations:^{
                          
                          __strong CSGrowingTextView *strongThis = this;
@@ -152,16 +184,16 @@
                                                        CGRectGetWidth(strongThis.frame),
                                                        CGRectGetHeight(frame));
                          
-                         strongThis.textView.frame = frame;
+                         strongThis.internalTextView.frame = frame;
                      } completion:^(BOOL finished) {
                          
                          __strong CSGrowingTextView *strongThis = this;
                          
                          if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-                             CGRect r = [strongThis.textView caretRectForPosition:strongThis.textView.selectedTextRange.end];
-                             CGFloat caretY =  MAX(r.origin.y - strongThis.textView.frame.size.height + r.size.height + 8, 0);
-                             if (strongThis.textView.contentOffset.y < caretY && r.origin.y != INFINITY) {
-                                 strongThis.textView.contentOffset = CGPointMake(0, caretY);
+                             CGRect r = [strongThis.internalTextView caretRectForPosition:strongThis.internalTextView.selectedTextRange.end];
+                             CGFloat caretY =  MAX(r.origin.y - strongThis.internalTextView.frame.size.height + r.size.height + 8, 0);
+                             if (strongThis.internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY) {
+                                 strongThis.internalTextView.contentOffset = CGPointMake(0, caretY);
                              }
                          }
                          
@@ -178,20 +210,20 @@
 - (CGFloat)textViewHeight {
 
     CGFloat contentHeight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 ?
-                             ceilf([self.textView sizeThatFits:self.bounds.size].height) :
-                             self.textView.contentSize.height);
+                             ceilf([self.internalTextView sizeThatFits:self.bounds.size].height) :
+                             self.internalTextView.contentSize.height);
     
     
-    NSInteger lines = contentHeight / self.textView.font.lineHeight;
+    NSInteger lines = contentHeight / self.internalTextView.font.lineHeight;
     lines = (lines < self.minimumNumberOfLines ? self.minimumNumberOfLines :
              (lines > self.maximumNumberOfLines ? self.maximumNumberOfLines : lines));
     
     UIEdgeInsets iOS6Insets = UIEdgeInsetsMake(-7, 0, -7, 0);
     CGFloat insets = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 ?
-                      self.textView.textContainerInset.top + self.textView.textContainerInset.bottom :
+                      self.internalTextView.textContainerInset.top + self.internalTextView.textContainerInset.bottom :
                       -iOS6Insets.top + (-iOS6Insets.bottom));
 
-    CGFloat lineHeight = self.textView.font.lineHeight;
+    CGFloat lineHeight = self.internalTextView.font.lineHeight;
     if (lineHeight) {
         lineHeight = (lineHeight - (NSInteger)lineHeight < 0.5 ?
                       lineHeight - (lineHeight - (NSInteger)lineHeight) + 0.5 :
@@ -208,12 +240,12 @@
 
 - (BOOL)becomeFirstResponder {
     
-    return [self.textView becomeFirstResponder];
+    return [self.internalTextView becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
 
-    return [self.textView resignFirstResponder];
+    return [self.internalTextView resignFirstResponder];
 }
 
 #pragma mark - UITextViewDelegate

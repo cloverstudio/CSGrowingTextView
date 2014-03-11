@@ -122,7 +122,7 @@
                         <outlet property="contentView" destination="3LK-6n-8Wr" id="p8v-Bl-4XK"/>
                         <outlet property="contentViewBottomConstraint" destination="5yK-ls-6nW" id="FIt-Qt-xEs"/>
                         <outlet property="growingTextView" destination="yQS-X5-0yk" id="Tcc-de-Wdi"/>
-                        <outlet property="growintTextViewHeightConstraint" destination="2gC-Bm-CAc" id="Oyx-4y-kmC"/>
+                        <outlet property="growingTextViewHeightConstraint" destination="2gC-Bm-CAc" id="5QE-LB-Im0"/>
                         <outlet property="textView" destination="EWN-42-yRt" id="dTX-Ua-BlP"/>
                     </connections>
                 </viewController>

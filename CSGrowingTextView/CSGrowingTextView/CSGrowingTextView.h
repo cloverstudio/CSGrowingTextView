@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, CSGrowDirection) {
 /**
  *  Text view used for the main textual content of the growint text view. You should be careful with direct changing it's attributes since it may affect growing text view shrinking and growing process.
  */
-@property (nonatomic, strong, readonly) UITextView *textView;
+@property (nonatomic, strong, readonly) UITextView *internalTextView;
 
 /**
  *  Label used for the placeholder textual content of the growing text view.
@@ -56,6 +56,16 @@ typedef NS_ENUM(NSInteger, CSGrowDirection) {
  *  CSGrowDirection value determening in what direction should growing text view grow or shring. Default value is CSGrowDirectionUp.
  */
 @property (nonatomic, readwrite) CSGrowDirection growDirection;
+
+/**
+ *  Time interval representing grow / shrink animation duration. Default is 0.1.
+ */
+@property (nonatomic, readwrite) NSTimeInterval growAnimationDuration;
+
+/**
+ *  UIViewAnimationOptions used for grow / shring animation. Default is UIViewAnimationOptionCurveEaseInOut.
+ */
+@property (nonatomic, readwrite) UIViewAnimationOptions growAnimationOptions;
 
 @end
 
