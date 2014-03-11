@@ -229,10 +229,10 @@
                       lineHeight - (lineHeight - (NSInteger)lineHeight) + 0.5 :
                       ceil(lineHeight));
         
-        return lineHeight * lines + insets;
+        return ceil(lineHeight * lines + insets);
     }
     else {
-        return lineHeight * lines + insets;
+        return ceil(lineHeight * lines + insets);
     }
 }
 
@@ -328,7 +328,7 @@
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
-    if ([(NSObject *)_delegate respondsToSelector:@selector(growingTextViewShouldBeginEditing:)]) {
+    if ([(NSObject *)_delegate respondsToSelector:@selector(growingTextViewShouldEndEditing:)]) {
         return [_delegate growingTextViewShouldEndEditing:self];
     }
     return YES;
