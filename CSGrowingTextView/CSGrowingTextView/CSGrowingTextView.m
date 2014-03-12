@@ -268,6 +268,8 @@
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
 
+    [self updateLayout];
+    
     if ([(NSObject *)_delegate respondsToSelector:@selector(growingTextViewDidChangeSelection:)]) {
         [_delegate growingTextViewDidChangeSelection:self];
     }

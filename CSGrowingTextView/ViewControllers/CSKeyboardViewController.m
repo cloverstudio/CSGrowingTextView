@@ -91,6 +91,7 @@
     [textView resignFirstResponder];
     
     self.textView.text = textView.internalTextView.text;
+    textView.internalTextView.text = @"";
     
     return YES;
 }
