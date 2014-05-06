@@ -169,9 +169,11 @@
     CGFloat newHeight = CGRectGetHeight(frame);
     CGFloat yOrigin = CGRectGetMinY(self.frame);
     
+    CGFloat diff = currentHeight ? newHeight - currentHeight : 0;
+    
     //Growing
     yOrigin = (_growDirection == CSGrowDirectionUp ?
-               yOrigin - abs(newHeight - currentHeight) : yOrigin);
+               yOrigin - abs(diff) : yOrigin);
     
     __weak id this = self;
     [UIView animateWithDuration:_growAnimationDuration delay:0.0
@@ -180,7 +182,7 @@
                          
                          __strong CSGrowingTextView *strongThis = this;
                          strongThis.frame = CGRectMake(CGRectGetMinX(strongThis.frame),
-                                                       CGRectGetMinY(strongThis.frame),
+                                                       yOrigin,
                                                        CGRectGetWidth(strongThis.frame),
                                                        CGRectGetHeight(frame));
                          
