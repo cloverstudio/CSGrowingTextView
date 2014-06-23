@@ -173,7 +173,7 @@
     
     //Growing
     yOrigin = (_growDirection == CSGrowDirectionUp ?
-               yOrigin - abs(diff) : yOrigin);
+               yOrigin - diff : yOrigin);
     
     __weak id this = self;
     [UIView animateWithDuration:_growAnimationDuration delay:0.0
