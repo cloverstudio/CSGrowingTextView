@@ -127,6 +127,8 @@
     [super layoutSubviews];
     
     [self updateLayout];
+    
+    [self updatePlaceholderFrame];
 }
 
 - (void)updateLayout {
