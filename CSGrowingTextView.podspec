@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CSGrowingTextView"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "CSGrowingTextView is a iOS text view that sizes while user types using keyboard."
 
   s.description  = <<-DESC
