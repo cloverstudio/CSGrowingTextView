@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CSGrowingTextView"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "CSGrowingTextView is a iOS text view that sizes while user types using keyboard."
 
   s.description  = <<-DESC
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '6.0'
   
-  s.source       = { :git => "https://github.com/cloverstudio/CSGrowingTextView.git", :commit => "fbef3c7b20a5a4fab0e0be0fd6a0391213c9a61a", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/cloverstudio/CSGrowingTextView.git", :tag => "v1.0.2" }
 
   s.source_files  = 'CSGrowingTextView/CSGrowingTextView/**/*.{h,m}'
 
