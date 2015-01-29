@@ -146,13 +146,9 @@
 }
 
 - (void)updatePlaceholderFrame {
-    
-    CGSize size = [_placeholderLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame) - kPladeholderPadding * 2,
-                                                             CGRectGetHeight(self.frame) - kPladeholderPadding * 2)];
-    _placeholderLabel.frame = CGRectMake(kPladeholderPadding,
-                                         kPladeholderPadding + [self insetsValue],
-                                         size.width, size.height);
-    
+    CGRect frame = self.internalTextView.frame;
+    frame.origin.x += kPladeholderPadding;
+    _placeholderLabel.frame = frame;
 }
 
 - (void)updateFrame:(CGRect)frame {
