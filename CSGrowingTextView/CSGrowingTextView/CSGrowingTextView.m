@@ -20,13 +20,13 @@
 
 - (void)dealloc {
     
-    [self.internalTextView removeObserver:self
-                       forKeyPath:@"font"];
+    [_internalTextView removeObserver:self
+                           forKeyPath:@"font"];
     
-    self.internalTextView.delegate = nil;
+    _internalTextView.delegate = nil;
     
-    [self.placeholderLabel removeObserver:self
-                               forKeyPath:@"text"];
+    [_placeholderLabel removeObserver:self
+                           forKeyPath:@"text"];
 }
 
 #pragma mark - Initialization
@@ -58,33 +58,33 @@
     _growAnimationOptions = UIViewAnimationOptionCurveEaseInOut;
     
     _internalTextView = [[UITextView alloc] initWithFrame:self.bounds];
-    self.internalTextView.font = [UIFont systemFontOfSize:15];
+    _internalTextView.font = [UIFont systemFontOfSize:15];
     _internalTextView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                  UIViewAutoresizingFlexibleHeight);
-    self.internalTextView.backgroundColor = [UIColor clearColor];
-    self.internalTextView.delegate = self;
-    [self addSubview:self.internalTextView];
+                                          UIViewAutoresizingFlexibleHeight);
+    _internalTextView.backgroundColor = [UIColor clearColor];
+    _internalTextView.delegate = self;
+    [self addSubview:_internalTextView];
     
     _placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(kPladeholderPadding,
                                                                   kPladeholderPadding + [self insetsValue],
                                                                   CGRectGetWidth(self.frame) - kPladeholderPadding * 2,
                                                                   CGRectGetHeight(self.frame) - kPladeholderPadding * 2)];
-    self.placeholderLabel.numberOfLines = 0;
-    self.placeholderLabel.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.placeholderLabel.font = self.internalTextView.font;
-    self.placeholderLabel.textColor = [UIColor whiteColor];
-    self.placeholderLabel.backgroundColor = [UIColor clearColor];
-    [self insertSubview:self.placeholderLabel belowSubview:self.internalTextView];
+    _placeholderLabel.numberOfLines = 0;
+    _placeholderLabel.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    _placeholderLabel.font = _internalTextView.font;
+    _placeholderLabel.textColor = [UIColor whiteColor];
+    _placeholderLabel.backgroundColor = [UIColor clearColor];
+    [self insertSubview:_placeholderLabel belowSubview:_internalTextView];
     
-    [self.internalTextView addObserver:self
-                    forKeyPath:@"font"
-                       options:0
-                       context:NULL];
+    [_internalTextView addObserver:self
+                        forKeyPath:@"font"
+                           options:0
+                           context:NULL];
     
-    [self.placeholderLabel addObserver:self
-                            forKeyPath:@"text"
-                               options:0
-                               context:NULL];
+    [_placeholderLabel addObserver:self
+                        forKeyPath:@"text"
+                           options:0
+                           context:NULL];
 }
 
 #pragma mark - Observing
@@ -138,7 +138,7 @@
                                       [self textViewHeight]);
     [self updateFrame:textViewFrame];
     
-    self.placeholderLabel.alpha = (self.internalTextView.text.length ? 0.0 : 1.0);
+    _placeholderLabel.alpha = (_internalTextView.text.length ? 0.0 : 1.0);
 }
 
 - (CGFloat)insetsValue {
@@ -157,7 +157,7 @@
 
 - (void)updateFrame:(CGRect)frame {
 
-    if (CGRectEqualToRect(frame, self.internalTextView.frame) &&
+    if (CGRectEqualToRect(frame, _internalTextView.frame) &&
         CGRectGetHeight(frame) == CGRectGetHeight(self.frame)) {return;}
     
     if ([(NSObject *)_delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
@@ -214,20 +214,20 @@
 - (CGFloat)textViewHeight {
 
     CGFloat contentHeight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 ?
-                             ceilf([self.internalTextView sizeThatFits:self.bounds.size].height) :
-                             self.internalTextView.contentSize.height);
+                             ceilf([_internalTextView sizeThatFits:self.bounds.size].height) :
+                             _internalTextView.contentSize.height);
     
     
-    NSInteger lines = contentHeight / self.internalTextView.font.lineHeight;
+    NSInteger lines = contentHeight / _internalTextView.font.lineHeight;
     lines = (lines < self.minimumNumberOfLines ? self.minimumNumberOfLines :
              (lines > self.maximumNumberOfLines ? self.maximumNumberOfLines : lines));
     
     UIEdgeInsets iOS6Insets = UIEdgeInsetsMake(-7, 0, -7, 0);
     CGFloat insets = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 ?
-                      self.internalTextView.textContainerInset.top + self.internalTextView.textContainerInset.bottom :
+                      _internalTextView.textContainerInset.top + _internalTextView.textContainerInset.bottom :
                       -iOS6Insets.top + (-iOS6Insets.bottom));
 
-    CGFloat lineHeight = self.internalTextView.font.lineHeight;
+    CGFloat lineHeight = _internalTextView.font.lineHeight;
     if (lineHeight) {
         lineHeight = (lineHeight - (NSInteger)lineHeight < 0.5 ?
                       lineHeight - (lineHeight - (NSInteger)lineHeight) + 0.5 :
@@ -243,13 +243,19 @@
 #pragma mark - Responders
 
 - (BOOL)becomeFirstResponder {
-    
-    return [self.internalTextView becomeFirstResponder];
+    return [_internalTextView becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
+    return [_internalTextView resignFirstResponder];
+}
 
-    return [self.internalTextView resignFirstResponder];
+- (BOOL)canBecomeFirstResponder {
+    return [_internalTextView canBecomeFirstResponder];
+}
+
+- (BOOL)canResignFirstResponder {
+    return [_internalTextView canResignFirstResponder];
 }
 
 #pragma mark - UITextViewDelegate
