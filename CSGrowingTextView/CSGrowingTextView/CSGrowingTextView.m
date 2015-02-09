@@ -258,6 +258,10 @@
     return [_internalTextView canResignFirstResponder];
 }
 
+- (BOOL)isFirstResponder {
+    return [_internalTextView isFirstResponder];
+}
+
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
