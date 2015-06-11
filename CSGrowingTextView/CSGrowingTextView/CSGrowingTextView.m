@@ -157,7 +157,7 @@
 }
 
 - (CGFloat)insetsValue {
-    return self.minimumNumberOfLines * (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1 ? -2.0 : -3.0);
+    return self.minimumNumberOfLines * (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1 ? -2.0 : 0.0);
 }
 
 - (void)updatePlaceholderFrame {
