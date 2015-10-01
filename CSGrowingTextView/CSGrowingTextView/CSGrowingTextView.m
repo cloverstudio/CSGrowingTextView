@@ -242,17 +242,8 @@
                       _internalTextView.textContainerInset.top + _internalTextView.textContainerInset.bottom :
                       -iOS6Insets.top + (-iOS6Insets.bottom));
 
-    CGFloat lineHeight = _internalTextView.font.lineHeight;
-    if (lineHeight) {
-        lineHeight = (lineHeight - (NSInteger)lineHeight < 0.5 ?
-                      lineHeight - (lineHeight - (NSInteger)lineHeight) + 0.5 :
-                      ceil(lineHeight));
-        
-        return ceil(lineHeight * lines + insets);
-    }
-    else {
-        return ceil(lineHeight * lines + insets);
-    }
+    CGFloat lineHeight = ceil(_internalTextView.font.lineHeight);
+    return ceil(lineHeight * lines + insets);
 }
 
 #pragma mark - Responders
