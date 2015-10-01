@@ -57,6 +57,9 @@
     _growAnimationDuration = 0.1;
     _growAnimationOptions = UIViewAnimationOptionCurveEaseInOut;
     
+    #ifdef __IPHONE_9_0
+    _internalTextView = [[UITextView alloc] initWithFrame:self.bounds];
+    #else
     // Fix for iOS 7+ jumping text problem
     // Solution based on http://stackoverflow.com/a/19339716/740474
     NSString *reqSysVer = @"7.0";
@@ -73,6 +76,7 @@
     } else {
         _internalTextView = [[UITextView alloc] initWithFrame:self.bounds];
     }
+    #endif
     _internalTextView.font = [UIFont systemFontOfSize:15];
     _internalTextView.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                           UIViewAutoresizingFlexibleHeight);
