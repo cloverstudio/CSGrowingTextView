@@ -165,13 +165,13 @@
 }
 
 - (void)updatePlaceholderFrame {
+    CGFloat maxWidth = CGRectGetWidth(self.frame) - kPladeholderPadding * 2;
     
-    CGSize size = [_placeholderLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame) - kPladeholderPadding * 2,
+    CGSize size = [_placeholderLabel sizeThatFits:CGSizeMake(maxWidth,
                                                              CGRectGetHeight(self.frame) - kPladeholderPadding * 2)];
     _placeholderLabel.frame = CGRectMake(kPladeholderPadding,
                                          kPladeholderPadding + [self insetsValue],
-                                         size.width, size.height);
-    
+                                         (size.width <= maxWidth ? size.width : maxWidth), size.height);
 }
 
 - (void)updateFrame:(CGRect)frame {
